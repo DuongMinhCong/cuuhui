@@ -154,7 +154,7 @@ input:focus{
 <input 
     type="number"
     id="money"
-    placeholder="Ví dụ: 877400"
+    placeholder="Ví dụ: 1180000"
 />
 
 </div>
@@ -172,14 +172,14 @@ input:focus{
 🔵 Xanh dương = đã đạt<br><br>
 
 Đã tính:
-- 24% hoa hồng
+- Hoa hồng 24%
 - Hụi 160k
 - Logic thực chiến GSM
 
 </div>
 
 <div class="footer">
-Thiết kế tối ưu cho iPhone 📱
+Tối ưu cho iPhone 📱
 </div>
 
 </div>
@@ -191,36 +191,31 @@ const levels = [
     {
         name:"🎯 ĐỦ HỤI 160K",
         target:480000,
-        min:50000,
         max:120000
     },
 
     {
         name:"📈 8% → 11%",
         target:950000,
-        min:20000,
         max:30000
     },
 
     {
         name:"🔥 11% → 16%",
         target:1200000,
-        min:30000,
-        max:70000
+        max:100000
     },
 
     {
         name:"🚀 16% → 21%",
         target:1450000,
-        min:50000,
-        max:100000
+        max:150000
     },
 
     {
         name:"🏆 21% → 24%",
         target:1700000,
-        min:30000,
-        max:50000
+        max:120000
     }
 
 ];
@@ -228,7 +223,7 @@ const levels = [
 const input = document.getElementById("money");
 const results = document.getElementById("results");
 
-function money(number){
+function formatMoney(number){
 
     return number.toLocaleString('vi-VN') + "đ";
 
@@ -254,7 +249,7 @@ function render(){
 
         }
 
-        else if(missing >= item.min && missing <= item.max){
+        else if(missing <= item.max){
 
             statusText = "✅ NÊN CỨU";
             statusClass = "good";
@@ -278,13 +273,13 @@ function render(){
 
             <div class="row">
                 <span>Mục tiêu:</span>
-                <b>${money(item.target)}</b>
+                <b>${formatMoney(item.target)}</b>
             </div>
 
             <div class="row">
                 <span>Còn thiếu:</span>
                 <b>
-                    ${missing > 0 ? money(missing) : "0đ"}
+                    ${missing > 0 ? formatMoney(missing) : "0đ"}
                 </b>
             </div>
 
