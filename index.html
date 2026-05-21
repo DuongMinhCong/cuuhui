@@ -1,0 +1,241 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tính Mốc Cứu GSM</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+    color:#222;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:18px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+input{
+    width:100%;
+    padding:16px;
+    font-size:20px;
+    border-radius:12px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+    margin-bottom:25px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#111;
+    color:white;
+    padding:14px;
+}
+
+td{
+    padding:14px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+.good{
+    color:green;
+    font-weight:bold;
+}
+
+.bad{
+    color:red;
+    font-weight:bold;
+}
+
+.done{
+    color:#2196F3;
+    font-weight:bold;
+}
+
+.note{
+    margin-top:20px;
+    background:#f8f8f8;
+    padding:15px;
+    border-radius:12px;
+    line-height:1.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>TÍNH MỐC CỨU GSM</h1>
+
+<input 
+    type="number" 
+    id="money" 
+    placeholder="Nhập doanh số hiện tại..."
+>
+
+<table>
+
+<thead>
+<tr>
+    <th>Mốc</th>
+    <th>Mục tiêu</th>
+    <th>Còn thiếu</th>
+    <th>Đánh giá</th>
+</tr>
+</thead>
+
+<tbody id="result"></tbody>
+
+</table>
+
+<div class="note">
+
+<b>Quy tắc:</b><br><br>
+
+✅ Xanh = đáng cứu<br>
+❌ Đỏ = không nên cố<br>
+🔵 Đã đạt = không cần cứu<br><br>
+
+Mức này đã tính:
+- Hoàn 24% hoa hồng
+- Lương hụi 160k
+- Logic thực chiến tài xế GSM
+
+</div>
+
+</div>
+
+<script>
+
+const levels = [
+
+    {
+        name:"ĐỦ HỤI 160K",
+        target:480000,
+        min:50000,
+        max:120000
+    },
+
+    {
+        name:"8% → 11%",
+        target:950000,
+        min:20000,
+        max:30000
+    },
+
+    {
+        name:"11% → 16%",
+        target:1200000,
+        min:30000,
+        max:70000
+    },
+
+    {
+        name:"16% → 21%",
+        target:1450000,
+        min:50000,
+        max:100000
+    },
+
+    {
+        name:"21% → 24%",
+        target:1700000,
+        min:30000,
+        max:50000
+    }
+
+];
+
+const moneyInput = document.getElementById("money");
+const result = document.getElementById("result");
+
+function formatMoney(number){
+
+    return number.toLocaleString('vi-VN') + "đ";
+
+}
+
+function render(){
+
+    const currentMoney = Number(moneyInput.value || 0);
+
+    let html = "";
+
+    levels.forEach(item=>{
+
+        let missing = item.target - currentMoney;
+
+        let status = "";
+
+        if(missing <= 0){
+
+            status = `<span class="done">ĐÃ ĐẠT</span>`;
+
+        }
+        else if(missing >= item.min && missing <= item.max){
+
+            status = `<span class="good">NÊN CỨU</span>`;
+
+        }
+        else{
+
+            status = `<span class="bad">KHÔNG NÊN</span>`;
+
+        }
+
+        html += `
+        
+        <tr>
+
+            <td>${item.name}</td>
+
+            <td>${formatMoney(item.target)}</td>
+
+            <td>
+                ${missing > 0 ? formatMoney(missing) : "0đ"}
+            </td>
+
+            <td>${status}</td>
+
+        </tr>
+        
+        `;
+
+    });
+
+    result.innerHTML = html;
+
+}
+
+moneyInput.addEventListener("input", render);
+
+render();
+
+</script>
+
+</body>
+</html>
+```
